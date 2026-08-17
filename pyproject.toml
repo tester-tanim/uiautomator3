@@ -12,32 +12,20 @@ python = "^3.8"
 adbutils = ">=2.0.0"
 Pillow = ">=8.0.0"
 
-[tool.poetry.group.ocr]
-optional = true
-
-[tool.poetry.group.ocr.dependencies]
-pytesseract = "*"
-
-[tool.poetry.group.vision]
-optional = true
-
-[tool.poetry.group.vision.dependencies]
-opencv-python = "*"
-numpy = "*"
-
-[tool.poetry.group.web]
-optional = true
-
-[tool.poetry.group.web.dependencies]
-fastapi = "*"
-uvicorn = "*"
-websockets = "*"
-
-[tool.poetry.group.mcp]
-optional = true
-
-[tool.poetry.group.mcp.dependencies]
-mcp = "*"
+# Optional-extra dependencies must live directly under
+# [tool.poetry.dependencies] with `optional = true` - poetry-core's
+# `[tool.poetry.extras]` table maps extra names to dependency *names*
+# declared here, not to poetry dependency *groups* (those are a separate,
+# non-overlapping mechanism for dev-only installs, see
+# [tool.poetry.group.dev] below). Declaring these under a group instead
+# silently produces no Requires-Dist entries for the extras.
+pytesseract = { version = "*", optional = true }
+opencv-python = { version = "*", optional = true }
+numpy = { version = "*", optional = true }
+fastapi = { version = "*", optional = true }
+uvicorn = { version = "*", optional = true }
+websockets = { version = "*", optional = true }
+mcp = { version = "*", optional = true }
 
 [tool.poetry.group.dev.dependencies]
 pytest = "*"
@@ -62,9 +50,32 @@ build-backend = "poetry.core.masonry.api"
 target-version = "py38"
 line-length = 120
 
+[tool.ruff.lint]
+# FA100 pushes `X | None` / builtin-generic annotations, which conflicts
+# with this project's Python 3.8 compatibility requirement (Optional[X],
+# not X | None - see CLAUDE.md). BLE001 (blind except) fires on the
+# intentionally broad `except Exception` guards used for best-effort
+# diagnostics (Device.health(), AIController.inspect()'s screen-label
+# fallback) where narrowing the exception type would add no safety.
+ignore = ["FA100", "BLE001"]
+
+[tool.ruff.lint.per-file-ignores]
+# Test fixtures build UIElement/dict payloads with many keyword args;
+# dict(...) reads more clearly there than an equivalent literal, and it's
+# a style-only rule with no correctness implication.
+"tests/**" = ["C408"]
+
 [tool.mypy]
 python_version = "3.8"
 ignore_missing_imports = true
+
+# Note: checking against python_version=3.8 requires a mypy release that
+# still supports pre-3.10 targets (mypy 2.0+ dropped this) AND a numpy
+# whose bundled stubs don't use syntax newer than the target Python (numpy
+# 2.x's stubs need 3.12+ to parse). CI pins compatible versions of both;
+# on a >=3.12 dev interpreter with a recent numpy installed, mypy may fail
+# to even parse numpy's stub file - that's an environment mismatch, not a
+# defect in this project's code.
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
