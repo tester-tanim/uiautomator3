@@ -2,7 +2,7 @@
 name = "uiautomator3"
 version = "0.1.0"
 description = "UIAutomator 3.0 - Next-generation Android automation framework with precision UI inspection"
-authors = ["UIAutomator3 Contributors"]
+authors = ["Ishtiaque Ahmed Tanim <ishtiaqueahmed1998@gmail.com>"]
 license = "MIT"
 readme = "README.md"
 packages = [{ include = "uiautomator3" }]
