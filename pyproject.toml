@@ -1,0 +1,70 @@
+[tool.poetry]
+name = "uiautomator3"
+version = "0.1.0"
+description = "UIAutomator 3.0 - Next-generation Android automation framework with precision UI inspection"
+authors = ["UIAutomator3 Contributors"]
+license = "MIT"
+readme = "README.md"
+packages = [{ include = "uiautomator3" }]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+adbutils = ">=2.0.0"
+Pillow = ">=8.0.0"
+
+[tool.poetry.group.ocr]
+optional = true
+
+[tool.poetry.group.ocr.dependencies]
+pytesseract = "*"
+
+[tool.poetry.group.vision]
+optional = true
+
+[tool.poetry.group.vision.dependencies]
+opencv-python = "*"
+numpy = "*"
+
+[tool.poetry.group.web]
+optional = true
+
+[tool.poetry.group.web.dependencies]
+fastapi = "*"
+uvicorn = "*"
+websockets = "*"
+
+[tool.poetry.group.mcp]
+optional = true
+
+[tool.poetry.group.mcp.dependencies]
+mcp = "*"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "*"
+pytest-cov = "*"
+mypy = "*"
+ruff = "*"
+
+[tool.poetry.extras]
+ocr = ["pytesseract"]
+vision = ["opencv-python", "numpy"]
+web = ["fastapi", "uvicorn", "websockets"]
+mcp = ["mcp"]
+
+[tool.poetry.scripts]
+u3 = "uiautomator3.cli.__main__:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+target-version = "py38"
+line-length = 120
+
+[tool.mypy]
+python_version = "3.8"
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,25 @@
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+dist/
+build/
+*.egg
+.venv/
+venv/
+
+# Node / frontend (inspector-web)
+node_modules/
+inspector-web/dist/
+inspector-web/.vite/
+*.log
+npm-debug.log*
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
