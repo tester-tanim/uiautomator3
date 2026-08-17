@@ -80,13 +80,19 @@ def test_generate_pom_method_names_derived_from_element_text():
 def test_generate_pom_repeated_screen_names_get_suffixed():
     session = RecordingSession()
     session.log(
-        "click", coordinates={"x": 1, "y": 1}, element=make_element("A"),
-        selector_criteria={"text": "A"}, screen="com.example/.Main",
+        "click",
+        coordinates={"x": 1, "y": 1},
+        element=make_element("A"),
+        selector_criteria={"text": "A"},
+        screen="com.example/.Main",
     )
     session.log("press", key="back")  # screen=None -> "unknown"
     session.log(
-        "click", coordinates={"x": 2, "y": 2}, element=make_element("B"),
-        selector_criteria={"text": "B"}, screen="com.example/.Main",
+        "click",
+        coordinates={"x": 2, "y": 2},
+        element=make_element("B"),
+        selector_criteria={"text": "B"},
+        screen="com.example/.Main",
     )
 
     code = generate_pom(session)

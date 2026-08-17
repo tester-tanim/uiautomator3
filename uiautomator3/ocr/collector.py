@@ -7,6 +7,7 @@ bounds contain an OCR region get their `ocr_text` populated; regions with
 no containing hierarchy element become synthetic UIElements tagged
 source={"ocr"} (e.g. canvas-rendered text with no accessibility node).
 """
+
 import dataclasses
 from typing import TYPE_CHECKING, List, Optional
 
@@ -23,9 +24,8 @@ def _find_containing_element(tree: ElementTree, region: OCRTextRegion) -> Option
     cx, cy = region.bounds.center.x, region.bounds.center.y
     best: Optional[UIElement] = None
     for element in tree:
-        if element.bounds.contains_point(cx, cy):
-            if best is None or element.bounds.area < best.bounds.area:
-                best = element
+        if element.bounds.contains_point(cx, cy) and (best is None or element.bounds.area < best.bounds.area):
+            best = element
     return best
 
 

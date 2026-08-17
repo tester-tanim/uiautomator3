@@ -5,6 +5,7 @@ authorization. Later phases add checks for the device-side agent,
 port availability, OCR/CV optional dependencies (see project spec section
 42).
 """
+
 import shutil
 import sys
 from dataclasses import dataclass, field
@@ -52,9 +53,7 @@ def run_doctor() -> DoctorReport:
     )
 
     adb_path = shutil.which("adb")
-    report.checks.append(
-        CheckResult("adb binary on PATH", adb_path is not None, adb_path or "adb not found on PATH")
-    )
+    report.checks.append(CheckResult("adb binary on PATH", adb_path is not None, adb_path or "adb not found on PATH"))
 
     try:
         device_list = list(adbutils.adb.device_list())

@@ -1,4 +1,5 @@
 """LocatorCandidate: one generated locator plus its computed scores."""
+
 from dataclasses import dataclass
 
 

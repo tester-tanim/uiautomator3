@@ -6,6 +6,7 @@ docs/UIAUTOMATOR3_ARCHITECTURE.md section 11). OCR/vision collectors
 described in the architecture doc's full pipeline (section 3) are later
 phases and not wired in yet.
 """
+
 import base64
 import io
 import time

@@ -4,8 +4,8 @@ import pytest
 
 from uiautomator3.hierarchy.collector import HierarchyCollector, HierarchyEmptyError
 
-VALID_XML = "<hierarchy rotation=\"0\"><node bounds=\"[0,0][100,100]\" /></hierarchy>"
-EMPTY_XML = "<hierarchy rotation=\"0\" />"
+VALID_XML = '<hierarchy rotation="0"><node bounds="[0,0][100,100]" /></hierarchy>'
+EMPTY_XML = '<hierarchy rotation="0" />'
 
 
 def make_collector():

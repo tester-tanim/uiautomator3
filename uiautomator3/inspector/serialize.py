@@ -6,7 +6,8 @@ the typed dataclasses into JSON-safe dicts, so the FastAPI layer in
 server.py never reimplements element shaping. See
 docs/UIAUTOMATOR3_ARCHITECTURE.md section 11.
 """
-from typing import Any, Dict, List
+
+from typing import Any, Dict
 
 from uiautomator3.elements.tree import ElementTree
 from uiautomator3.elements.uielement import UIElement

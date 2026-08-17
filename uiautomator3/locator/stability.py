@@ -4,6 +4,7 @@ Deterministic, rule-based (not ML) per docs/UIAUTOMATOR3_ARCHITECTURE.md
 section 5: stability = f(depends_on_index, depends_on_dynamic_attrs,
 resource_id_naming_pattern).
 """
+
 import re
 
 # Text/resource-id values that look auto-generated / dynamic: long hex/digit

@@ -1,7 +1,5 @@
 from unittest.mock import MagicMock, patch
 
-import pytest
-
 from uiautomator3.device.device import Device
 
 
@@ -146,7 +144,7 @@ def test_info_returns_device_info(mock_get_device):
 @patch("uiautomator3.device.device.get_device")
 def test_dump_hierarchy_returns_raw_xml(mock_get_device):
     adb_device = make_adb_device()
-    adb_device.dump_hierarchy.return_value = "<hierarchy rotation=\"0\"><node bounds=\"[0,0][1,1]\" /></hierarchy>"
+    adb_device.dump_hierarchy.return_value = '<hierarchy rotation="0"><node bounds="[0,0][1,1]" /></hierarchy>'
     mock_get_device.return_value = adb_device
 
     device = Device(serial="emulator-5554")
@@ -286,9 +284,7 @@ def test_visual_uses_injected_provider_without_importing_cv2(mock_get_device):
     device.screenshot = MagicMock(return_value=Image.new("RGB", (10, 10)))
 
     fake_provider = MagicMock()
-    fake_provider.find.return_value = VisionMatch(
-        similarity=0.95, point=Point(5, 5), bounds=Bounds(0, 0, 10, 10)
-    )
+    fake_provider.find.return_value = VisionMatch(similarity=0.95, point=Point(5, 5), bounds=Bounds(0, 0, 10, 10))
 
     template = Image.new("RGB", (5, 5))
     locator = device.visual(template, provider=fake_provider)

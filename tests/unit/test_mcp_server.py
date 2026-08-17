@@ -6,10 +6,10 @@ from PIL import Image
 
 pytest.importorskip("mcp")
 
-from uiautomator3.ai.controller import AIController  # noqa: E402
-from uiautomator3.elements.tree import ElementTree  # noqa: E402
-from uiautomator3.elements.uielement import Bounds, UIElement  # noqa: E402
-from uiautomator3.mcp.server import _devices, build_server  # noqa: E402
+from uiautomator3.ai.controller import AIController
+from uiautomator3.elements.tree import ElementTree
+from uiautomator3.elements.uielement import Bounds, UIElement
+from uiautomator3.mcp.server import _devices, build_server
 
 
 def make_element(id, **overrides):
@@ -77,9 +77,20 @@ def test_default_tools_registered(mock_connect):
     tools = asyncio.run(server.list_tools())
     names = {t.name for t in tools}
     expected = {
-        "connect_device", "get_device_info", "inspect_screen", "find_element",
-        "click_element", "type_text", "swipe", "scroll", "take_screenshot",
-        "get_ui_tree", "get_current_activity", "launch_app", "stop_app", "install_app",
+        "connect_device",
+        "get_device_info",
+        "inspect_screen",
+        "find_element",
+        "click_element",
+        "type_text",
+        "swipe",
+        "scroll",
+        "take_screenshot",
+        "get_ui_tree",
+        "get_current_activity",
+        "launch_app",
+        "stop_app",
+        "install_app",
     }
     assert expected <= names
     assert "run_script" not in names

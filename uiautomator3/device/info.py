@@ -1,4 +1,5 @@
 """Device information snapshot (Phase 2 scope)."""
+
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Optional
 

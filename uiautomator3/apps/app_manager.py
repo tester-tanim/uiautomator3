@@ -8,6 +8,7 @@ working even if the automation server itself is down (see
 docs/UIAUTOMATOR2_ANALYSIS.md section 10); Phase 2 has no agent yet at all,
 so this is the only viable path, and it is also the right long-term choice.
 """
+
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, List, Optional
 

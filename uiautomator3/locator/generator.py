@@ -6,6 +6,7 @@ Relative/OCR/visual strategies are later phases (OCR/vision engines don't
 exist yet); xpath here is a structural best-effort path built from the
 ElementTree, not a full XPath 1.0 implementation.
 """
+
 from typing import List, Optional
 
 from uiautomator3.elements.tree import ElementTree
@@ -152,9 +153,7 @@ def generate_candidates(element: UIElement, tree: ElementTree) -> List[LocatorCa
         )
 
         if element.text:
-            matches = _count_matches(
-                tree, lambda e: e.class_name == element.class_name and e.text == element.text
-            )
+            matches = _count_matches(tree, lambda e: e.class_name == element.class_name and e.text == element.text)
             uniqueness = _uniqueness(matches)
             stability = text_stability(element.text)
             specificity = _specificity(2)
@@ -163,9 +162,7 @@ def generate_candidates(element: UIElement, tree: ElementTree) -> List[LocatorCa
                 LocatorCandidate(
                     strategy="class_and_text",
                     locator=f"{element.class_name}[text='{element.text}']",
-                    python_code=(
-                        f"d(className='{_escape(element.class_name)}', text='{_escape(element.text)}')"
-                    ),
+                    python_code=(f"d(className='{_escape(element.class_name)}', text='{_escape(element.text)}')"),
                     uniqueness=uniqueness,
                     stability=stability,
                     specificity=specificity,

@@ -24,12 +24,14 @@ package - see uiautomator3.mcp.server).
 Later phases extend this surface incrementally per
 docs/UIAUTOMATOR3_ARCHITECTURE.md.
 """
+
 from uiautomator3.ai import AIController, AIElement, ScreenDescription
 from uiautomator3.apps.app_manager import AppInfo, AppManager, RunningAppInfo
 from uiautomator3.client.connect import connect, devices
 from uiautomator3.device.device import Device
 from uiautomator3.device.info import DeviceInfo
-from uiautomator3.diagnostics.doctor import DoctorReport, run_doctor as doctor
+from uiautomator3.diagnostics.doctor import DoctorReport
+from uiautomator3.diagnostics.doctor import run_doctor as doctor
 from uiautomator3.elements import Bounds, ElementTree, Point, UIElement
 from uiautomator3.exceptions import (
     AdbError,
@@ -57,47 +59,47 @@ from uiautomator3.version import __version__
 from uiautomator3.vision import VisionMatch
 
 __all__ = [
+    "AIController",
+    "AIElement",
+    "AdbError",
+    "AppInfo",
+    "AppLaunchError",
+    "AppManager",
+    "Bounds",
+    "Device",
+    "DeviceConnectionError",
+    "DeviceInfo",
+    "DeviceNotFoundError",
+    "DoctorReport",
+    "ElementAmbiguousError",
+    "ElementNotFoundError",
+    "ElementSnapshot",
+    "ElementTree",
+    "HealingReport",
+    "InspectorError",
+    "Locator",
+    "LocatorCandidate",
+    "LocatorHealingError",
+    "LocatorSet",
+    "OCRProviderError",
+    "OCRTextRegion",
+    "Point",
+    "RecordedAction",
+    "RecordingSession",
+    "RunningAppInfo",
+    "ScreenDescription",
+    "Selector",
+    "SelectorError",
+    "Settings",
+    "StabilityReport",
+    "TransportError",
+    "TransportTimeoutError",
+    "UIAutomator3Error",
+    "UIElement",
+    "VisionMatch",
+    "VisionProviderError",
     "__version__",
     "connect",
     "devices",
     "doctor",
-    "Device",
-    "DoctorReport",
-    "DeviceInfo",
-    "AppManager",
-    "AppInfo",
-    "RunningAppInfo",
-    "UIElement",
-    "Bounds",
-    "Point",
-    "ElementTree",
-    "Locator",
-    "Selector",
-    "LocatorCandidate",
-    "LocatorSet",
-    "StabilityReport",
-    "OCRTextRegion",
-    "VisionMatch",
-    "Settings",
-    "HealingReport",
-    "ElementSnapshot",
-    "RecordingSession",
-    "RecordedAction",
-    "AIController",
-    "AIElement",
-    "ScreenDescription",
-    "UIAutomator3Error",
-    "DeviceConnectionError",
-    "DeviceNotFoundError",
-    "TransportError",
-    "TransportTimeoutError",
-    "AdbError",
-    "ElementNotFoundError",
-    "ElementAmbiguousError",
-    "SelectorError",
-    "LocatorHealingError",
-    "InspectorError",
-    "OCRProviderError",
-    "VisionProviderError",
-    "AppLaunchError",
 ]

@@ -13,6 +13,7 @@ adb `input swipe`/`input tap` are single-pointer. Multi-touch gestures
 (pinch, two-finger scroll) require the device-side agent and are deferred
 to a later phase per docs/UIAUTOMATOR3_ARCHITECTURE.md.
 """
+
 from typing import TYPE_CHECKING, List, Tuple, Union
 
 from uiautomator3.exceptions import AdbError

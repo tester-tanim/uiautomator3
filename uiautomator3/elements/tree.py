@@ -6,6 +6,7 @@ addressing the O(n) linear-scan approach uiautomator2 uses for its only
 relationship feature (see docs/UIAUTOMATOR2_ANALYSIS.md section 4,
 `.right()/.left()/.up()/.down()`).
 """
+
 from collections import defaultdict
 from typing import Dict, List, Optional
 

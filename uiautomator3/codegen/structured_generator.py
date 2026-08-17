@@ -6,6 +6,7 @@ full YAML library is unnecessary weight for the core codegen path. If a
 recording ever needs a real YAML *parser* (round-tripping), that's a
 reason to add PyYAML as an optional extra then, not now.
 """
+
 import json
 from typing import Any, Dict, List
 

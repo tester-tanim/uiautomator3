@@ -5,6 +5,7 @@ importing uiautomator3.ocr never requires the optional `ocr` extra to be
 installed - only constructing a TesseractProvider does. This matches
 docs/UIAUTOMATOR3_ARCHITECTURE.md's "core stays light" principle.
 """
+
 from typing import TYPE_CHECKING, List, Optional
 
 from uiautomator3.elements.uielement import Bounds
@@ -33,9 +34,7 @@ class TesseractProvider:
 
     def detect_text(self, image: "Image") -> List[OCRTextRegion]:
         try:
-            data = self._pytesseract.image_to_data(
-                image, lang=self._lang, output_type=self._pytesseract.Output.DICT
-            )
+            data = self._pytesseract.image_to_data(image, lang=self._lang, output_type=self._pytesseract.Output.DICT)
         except Exception as e:
             raise OCRProviderError(f"tesseract OCR failed: {e}") from e
 

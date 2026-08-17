@@ -6,8 +6,8 @@ from uiautomator3.locator.locator_set import LocatorSet
 __all__ = [
     "LocatorCandidate",
     "LocatorSet",
+    "StabilityReport",
+    "analyze_locator",
     "generate_candidates",
     "rank_candidates",
-    "analyze_locator",
-    "StabilityReport",
 ]

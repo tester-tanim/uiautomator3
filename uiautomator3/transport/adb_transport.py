@@ -8,6 +8,7 @@ device-side agent (mirroring uiautomator2's proven "push a jar, talk
 JSON-RPC over an adb tunnel" approach - see docs/UIAUTOMATOR2_ANALYSIS.md
 section 2), while both share this same Transport interface.
 """
+
 from typing import Any, Optional
 
 import adbutils

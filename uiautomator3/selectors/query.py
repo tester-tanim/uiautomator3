@@ -8,8 +8,9 @@ section 4). Querying against a local snapshot means every locator strategy
 UIElement data, per docs/UIAUTOMATOR3_ARCHITECTURE.md's "one element model"
 principle.
 """
+
 import re
-from typing import Any, Dict, List, Optional
+from typing import Any, ClassVar, Dict, List, Optional
 
 from uiautomator3.elements.tree import ElementTree
 from uiautomator3.elements.uielement import UIElement
@@ -23,7 +24,7 @@ class Selector:
     and the equivalent for `resourceId`/`description`/`className`.
     """
 
-    _FIELD_ALIASES = {
+    _FIELD_ALIASES: ClassVar[Dict[str, str]] = {
         "resourceId": "resource_id",
         "resource_id": "resource_id",
         "description": "content_description",

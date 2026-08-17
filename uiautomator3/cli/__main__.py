@@ -11,6 +11,7 @@ Phase 10 adds: mcp serve - launches the MCP server (project spec section
 41: `u3 mcp serve`). Shell command execution is off unless --allow-shell
 is passed (project spec section 52).
 """
+
 import argparse
 import json
 import sys
@@ -62,10 +63,7 @@ def cmd_inspect(args: argparse.Namespace) -> int:
     try:
         from uiautomator3.inspector.server import serve
     except ImportError:
-        print(
-            "The inspector requires the 'web' extra. Install with:\n"
-            "  pip install uiautomator3[web]"
-        )
+        print("The inspector requires the 'web' extra. Install with:\n  pip install uiautomator3[web]")
         return 1
 
     print(f"Starting inspector at http://{args.host}:{args.port}")
@@ -74,7 +72,7 @@ def cmd_inspect(args: argparse.Namespace) -> int:
 
 
 def cmd_codegen(args: argparse.Namespace) -> int:
-    import uiautomator3.codegen as codegen
+    from uiautomator3 import codegen
     from uiautomator3.recording.session import RecordingSession
 
     generators = {
@@ -106,10 +104,7 @@ def cmd_mcp_serve(args: argparse.Namespace) -> int:
     try:
         from uiautomator3.mcp.server import serve
     except ImportError:
-        print(
-            "The MCP server requires the 'mcp' package. Install with:\n"
-            "  pip install mcp"
-        )
+        print("The MCP server requires the 'mcp' package. Install with:\n  pip install mcp")
         return 1
 
     serve(host=args.host, port=args.port, allow_shell=args.allow_shell, transport=args.transport)

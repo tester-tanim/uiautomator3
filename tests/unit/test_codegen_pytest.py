@@ -35,7 +35,7 @@ def test_generate_pytest_custom_test_name():
 
 def test_generate_pytest_uses_d_fixture_not_bare_d():
     code = generate_pytest(build_session())
-    assert "d(text=\"Login\").click()" in code
+    assert 'd(text="Login").click()' in code
     assert "d = u3.connect()" not in code  # connection lives in the fixture
 
 

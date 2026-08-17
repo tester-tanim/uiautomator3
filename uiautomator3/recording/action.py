@@ -11,6 +11,7 @@ Shape matches project spec section 18:
       "confidence": 0.98
     }
 """
+
 from dataclasses import dataclass, field
 from typing import Any, Dict, Optional
 
@@ -51,7 +52,16 @@ class RecordedAction:
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "RecordedAction":
-        known_keys = {"action", "timestamp", "coordinates", "locator", "selector_criteria", "element", "screen", "confidence"}
+        known_keys = {
+            "action",
+            "timestamp",
+            "coordinates",
+            "locator",
+            "selector_criteria",
+            "element",
+            "screen",
+            "confidence",
+        }
         element = data.get("element") or {}
         return cls(
             action=data["action"],

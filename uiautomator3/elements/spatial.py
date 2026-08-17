@@ -6,6 +6,7 @@ device round-trip per query. Generalizes uiautomator2's
 selector query, see docs/UIAUTOMATOR2_ANALYSIS.md section 4) into
 one-shot geometry over a snapshot.
 """
+
 from typing import List
 
 from uiautomator3.elements.uielement import UIElement

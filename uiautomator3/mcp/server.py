@@ -14,6 +14,7 @@ service must not expose unrestricted functionality by default.
 is passed to `build_server()` - project spec section 52: "Never execute
 arbitrary shell commands through public APIs without explicit opt-in."
 """
+
 from typing import Any, Dict, Optional
 
 from uiautomator3.client.connect import connect as u3_connect
@@ -129,7 +130,11 @@ def build_server(allow_shell: bool = False):
         image = device.screenshot()
         buf = io.BytesIO()
         image.save(buf, format="PNG")
-        return {"png_base64": base64.b64encode(buf.getvalue()).decode("ascii"), "width": image.width, "height": image.height}
+        return {
+            "png_base64": base64.b64encode(buf.getvalue()).decode("ascii"),
+            "width": image.width,
+            "height": image.height,
+        }
 
     @server.tool()
     def get_ui_tree(serial: Optional[str] = None) -> Dict[str, Any]:

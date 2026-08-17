@@ -32,8 +32,12 @@ def make_element(id, **overrides):
 
 def test_snapshot_from_element():
     element = make_element(
-        "a", text="Login", content_description="Login btn", resource_id="id/login",
-        class_name="android.widget.Button", role="button",
+        "a",
+        text="Login",
+        content_description="Login btn",
+        resource_id="id/login",
+        class_name="android.widget.Button",
+        role="button",
     )
     snapshot = ElementSnapshot.from_element(element)
     assert snapshot.text == "Login"
@@ -60,7 +64,11 @@ def test_heal_recovers_via_text_when_resource_id_changed():
 
 def test_heal_prefers_resource_id_when_still_present():
     snapshot = ElementSnapshot(
-        text="Login", content_description=None, resource_id="id/login", class_name="android.widget.Button", role="button"
+        text="Login",
+        content_description=None,
+        resource_id="id/login",
+        class_name="android.widget.Button",
+        role="button",
     )
     current_element = make_element("a", text="Different now", resource_id="id/login")
     tree = ElementTree([current_element])
@@ -86,12 +94,8 @@ def test_heal_fails_when_nothing_matches():
 
 def test_heal_respects_min_confidence():
     # two elements share the same text -> low uniqueness -> low confidence
-    snapshot = ElementSnapshot(
-        text="Login", content_description=None, resource_id="old_id", class_name=None, role=None
-    )
-    tree = ElementTree(
-        [make_element("a", text="Login"), make_element("b", text="Login")]
-    )
+    snapshot = ElementSnapshot(text="Login", content_description=None, resource_id="old_id", class_name=None, role=None)
+    tree = ElementTree([make_element("a", text="Login"), make_element("b", text="Login")])
 
     report = heal(tree, Selector(resourceId="old_id"), snapshot, min_confidence=0.85)
 

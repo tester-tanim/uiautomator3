@@ -5,6 +5,7 @@ provider, never imported by core modules. `OCRTextRegion` bounds are in
 device screen pixel coordinates, matching UIElement.bounds, so the two can
 be composed directly by the collector.
 """
+
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, List, Protocol
 

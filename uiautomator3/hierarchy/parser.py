@@ -11,8 +11,9 @@ directly addressing the structural split identified in
 docs/UIAUTOMATOR2_ANALYSIS.md section 6 (selector RPC objects vs. parsed
 XML being two incompatible representations in uiautomator2).
 """
+
 import xml.etree.ElementTree as ET
-from typing import List, Optional, Tuple
+from typing import List, Optional
 
 from uiautomator3.elements.roles import classify
 from uiautomator3.elements.tree import ElementTree

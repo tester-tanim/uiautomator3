@@ -19,7 +19,7 @@ SAMPLE_XML = """<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
   </node>
 </hierarchy>"""
 
-EMPTY_XML = "<hierarchy rotation=\"0\" />"
+EMPTY_XML = '<hierarchy rotation="0" />'
 
 
 def test_parses_rotation():

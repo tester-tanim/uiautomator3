@@ -1,4 +1,5 @@
 """LocatorSet: the result of generating and ranking candidates for one element."""
+
 from dataclasses import dataclass
 from typing import List, Optional
 

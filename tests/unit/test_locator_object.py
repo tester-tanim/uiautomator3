@@ -71,9 +71,7 @@ def test_click_resolves_and_clicks_center():
 def test_click_walks_up_to_clickable_ancestor_when_matched_element_is_not_clickable():
     # a launcher-icon-label style hierarchy: the matched TextView is not
     # clickable, but its RelativeLayout ancestor (icon + label) is.
-    parent = make_element(
-        "parent", clickable=True, bounds=Bounds(33, 1079, 287, 1378), children=["label"]
-    )
+    parent = make_element("parent", clickable=True, bounds=Bounds(33, 1079, 287, 1378), children=["label"])
     label = make_element(
         "label", text="WhatsApp", clickable=False, parent_id="parent", bounds=Bounds(33, 1234, 287, 1378)
     )

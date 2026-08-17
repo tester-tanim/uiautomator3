@@ -7,6 +7,7 @@ database - see docs/UIAUTOMATOR3_ARCHITECTURE.md section 7 and the
 project's own note that healing must not change behavior unless
 explicitly enabled.
 """
+
 from dataclasses import dataclass
 from typing import Optional
 

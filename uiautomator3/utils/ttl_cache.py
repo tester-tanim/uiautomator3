@@ -6,6 +6,7 @@ per project spec section 49-50 (Performance Requirements / Caching):
 back-to-back calls within the same UI state shouldn't each pay a fresh
 adb round-trip.
 """
+
 import time
 from typing import Callable, Generic, Optional, TypeVar
 

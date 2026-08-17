@@ -7,11 +7,12 @@ data. Later phases can extend this further the way uiautomator2's
 Settings does (wait_timeout, operation_delay, ...) without changing the
 access pattern.
 """
-from typing import Any, Dict
+
+from typing import Any, ClassVar, Dict
 
 
 class Settings:
-    _DEFAULTS: Dict[str, Any] = {
+    _DEFAULTS: ClassVar[Dict[str, Any]] = {
         "self_healing": False,
         "self_healing_min_confidence": 0.85,
         "hierarchy_cache_ttl": 0.3,

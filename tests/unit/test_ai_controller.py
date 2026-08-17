@@ -54,9 +54,7 @@ def test_inspect_returns_screen_and_elements():
 
 def test_inspect_excludes_uninteresting_elements():
     labeled = make_element("a", text="Login")
-    blank_container = make_element(
-        "b", text=None, content_description=None, clickable=False, role="container"
-    )
+    blank_container = make_element("b", text=None, content_description=None, clickable=False, role="container")
     device = make_device_with_elements([labeled, blank_container])
     ai = AIController(device)
 

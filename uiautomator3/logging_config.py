@@ -1,4 +1,5 @@
 """Unified logging setup for UIAutomator 3.0."""
+
 import logging
 from typing import Optional
 
@@ -14,8 +15,6 @@ def configure_logging(level: str = "INFO") -> None:
     logger = logging.getLogger(_LOGGER_NAME)
     if not logger.handlers:
         handler = logging.StreamHandler()
-        handler.setFormatter(
-            logging.Formatter("%(asctime)s %(levelname)-8s %(name)s: %(message)s")
-        )
+        handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)-8s %(name)s: %(message)s"))
         logger.addHandler(handler)
     logger.setLevel(level.upper())

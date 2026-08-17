@@ -6,6 +6,7 @@ uiautomator2's split between RPC-object-based `UiObject.info` and
 lxml-based `XMLElement` (see docs/UIAUTOMATOR2_ANALYSIS.md section 6) with
 one typed dataclass built once per hierarchy snapshot.
 """
+
 from dataclasses import dataclass, field
 from typing import FrozenSet, List, Optional
 
@@ -38,10 +39,7 @@ class Bounds:
 
     def intersects(self, other: "Bounds") -> bool:
         return not (
-            self.right <= other.left
-            or other.right <= self.left
-            or self.bottom <= other.top
-            or other.bottom <= self.top
+            self.right <= other.left or other.right <= self.left or self.bottom <= other.top or other.bottom <= self.top
         )
 
 

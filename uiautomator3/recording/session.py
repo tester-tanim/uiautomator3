@@ -1,4 +1,5 @@
 """RecordingSession: accumulates RecordedAction entries during d.start_recording()."""
+
 import time
 from typing import TYPE_CHECKING, Any, Dict, List, Optional
 

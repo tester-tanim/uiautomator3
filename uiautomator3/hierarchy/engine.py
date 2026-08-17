@@ -11,6 +11,7 @@ takes effect immediately; set it to 0 to disable caching entirely. Every
 gesture/selector action on Device invalidates the cache immediately after
 acting (see device/device.py), since the UI has likely changed.
 """
+
 from typing import TYPE_CHECKING, Optional
 
 from uiautomator3.elements.tree import ElementTree

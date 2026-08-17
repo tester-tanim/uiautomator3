@@ -5,6 +5,7 @@ mechanism uiautomator2 uses for `dump_hierarchy()` (see
 docs/UIAUTOMATOR2_ANALYSIS.md section 6), requiring no device-side agent.
 Retries on the known empty-dump flakiness uiautomator2 also works around.
 """
+
 import time
 from typing import TYPE_CHECKING
 

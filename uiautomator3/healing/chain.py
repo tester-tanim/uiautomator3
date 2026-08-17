@@ -28,6 +28,7 @@ Callers who want OCR/visual healing can extend the chain explicitly (see
 common "resource-id renamed but text/class stayed the same" case that
 motivates this feature.
 """
+
 from dataclasses import dataclass, field
 from typing import Callable, List, Optional
 
@@ -117,10 +118,10 @@ class HealingReport:
         ]
         if self.recovered:
             lines += [
-                f"Recovered using:",
+                "Recovered using:",
                 self.recovered_via or "?",
                 "",
-                f"Confidence:",
+                "Confidence:",
                 f"{self.confidence * 100:.0f}%",
             ]
         else:

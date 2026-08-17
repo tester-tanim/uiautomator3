@@ -4,6 +4,7 @@ Wraps adbutils for device enumeration, following uiautomator2's proven
 choice of adbutils as the ADB integration library (see
 docs/UIAUTOMATOR2_ANALYSIS.md section 3).
 """
+
 from typing import List, Optional
 
 import adbutils

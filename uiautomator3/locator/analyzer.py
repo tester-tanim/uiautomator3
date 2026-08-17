@@ -5,6 +5,7 @@
 Selector, rather than a generated candidate - the Phase 5/7 feature from
 the project brief's "Locator Stability Analyzer" section.
 """
+
 from dataclasses import dataclass
 from typing import List, Optional
 

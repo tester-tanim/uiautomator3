@@ -13,6 +13,7 @@ later resolution finds zero matches and `d.settings["self_healing"]` is
 True, it searches the current tree using that remembered snapshot instead
 of immediately raising.
 """
+
 import time
 from typing import TYPE_CHECKING, List, Optional
 
@@ -81,9 +82,7 @@ class Locator:
         self.last_healing_report = report
 
         if not report.recovered or report.recovered_element is None:
-            raise LocatorHealingError(
-                f"self-healing failed for {self.selector!r}\n\n{report.format()}"
-            )
+            raise LocatorHealingError(f"self-healing failed for {self.selector!r}\n\n{report.format()}")
         return report.recovered_element
 
     def _resolve_single_in(self, tree: "ElementTree") -> "UIElement":
@@ -94,8 +93,7 @@ class Locator:
             raise ElementNotFoundError(f"no element matched {self.selector!r}")
         if len(matches) > 1:
             raise ElementAmbiguousError(
-                f"{len(matches)} elements matched {self.selector!r}; "
-                f"use .all() or add a more specific constraint"
+                f"{len(matches)} elements matched {self.selector!r}; use .all() or add a more specific constraint"
             )
         element = matches[0]
         self._snapshot = ElementSnapshot.from_element(element)

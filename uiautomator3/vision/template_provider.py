@@ -11,9 +11,10 @@ Imports cv2/numpy lazily so importing uiautomator3.vision never requires
 the optional `vision` extra - only constructing a TemplateMatchProvider
 does.
 """
+
 from typing import TYPE_CHECKING, Optional, Tuple
 
-from uiautomator3.elements.uielement import Bounds, Point
+from uiautomator3.elements.uielement import Bounds
 from uiautomator3.exceptions import VisionProviderError
 from uiautomator3.vision.provider import VisionMatch
 

@@ -5,6 +5,7 @@ docs/UIAUTOMATOR3_ARCHITECTURE.md section 8 - fast enough to run on every
 normalization pass, and does not depend exclusively on class name (also
 consults clickable/checkable/scrollable state).
 """
+
 from uiautomator3.elements.uielement import UIElement
 
 _CLASS_SUFFIX_ROLES = {

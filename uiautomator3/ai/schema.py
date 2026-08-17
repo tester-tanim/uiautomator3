@@ -5,6 +5,7 @@ never be handed raw screenshots alone. Every element is described with
 role/label/locator/confidence so an agent can reason about *what* is on
 screen and *how* to act on it without vision-model inference.
 """
+
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
 

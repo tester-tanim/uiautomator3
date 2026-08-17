@@ -10,6 +10,7 @@ parallel automation logic, matching docs/UIAUTOMATOR3_ARCHITECTURE.md
 section 12's "no parallel logic to maintain" principle (also true of the
 MCP layer built on top of this in the same phase).
 """
+
 from typing import TYPE_CHECKING, Any, Dict
 
 from uiautomator3.ai.matcher import find_all_matches, find_best_match

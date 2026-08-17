@@ -1,4 +1,5 @@
 """Generate a pytest test module from a RecordingSession (project spec section 19)."""
+
 from uiautomator3.codegen.python_generator import _line_for_action
 from uiautomator3.recording.session import RecordingSession
 

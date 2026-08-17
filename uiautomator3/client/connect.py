@@ -1,4 +1,5 @@
 """Public connection entry points: `u3.connect()` and `u3.devices()`."""
+
 import os
 from typing import List, Optional
 

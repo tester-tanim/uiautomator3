@@ -1,4 +1,5 @@
 """Fluent OCR locator: `d.ocr("Login").click()` per project spec section 11."""
+
 import time
 from typing import TYPE_CHECKING, Optional
 

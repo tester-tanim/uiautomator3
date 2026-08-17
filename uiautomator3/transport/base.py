@@ -5,6 +5,7 @@ backend directly - only on this protocol. This is what lets the wire
 protocol evolve (e.g. HTTP/JSON-RPC today, WebSocket push later) without a
 public API break. See docs/UIAUTOMATOR3_ARCHITECTURE.md section 14.
 """
+
 from abc import ABC, abstractmethod
 from typing import Any, Optional
 

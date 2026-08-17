@@ -11,6 +11,7 @@ Phase 11 adds a short TTL cache per display_id (project spec section
 49-50), invalidated automatically after any Device gesture/action (see
 device/device.py).
 """
+
 from typing import TYPE_CHECKING, Dict, Optional
 
 from uiautomator3.exceptions import AdbError
@@ -36,7 +37,9 @@ class ScreenshotEngine:
             self._caches[display_id] = TTLCache(ttl=0.3)
         return self._caches[display_id]
 
-    def capture(self, display_id: Optional[int] = None, force: bool = False, ttl: Optional[float] = None) -> "Image.Image":
+    def capture(
+        self, display_id: Optional[int] = None, force: bool = False, ttl: Optional[float] = None
+    ) -> "Image.Image":
         """Return a full-screen capture as a PIL Image.
 
         Returns a cached capture for the same `display_id` if one was

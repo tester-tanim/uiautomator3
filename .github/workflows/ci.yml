@@ -1,0 +1,132 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    name: Test (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install package with all extras
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[ocr,vision,web,mcp]"
+          pip install pytest pytest-cov
+
+      - name: Run unit tests
+        run: pytest tests/unit -v --cov=uiautomator3 --cov-report=xml --cov-report=term
+
+      - name: Upload coverage
+        if: matrix.python-version == '3.11'
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage.xml
+
+  lint:
+    name: Lint (ruff)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install ruff
+        run: pip install ruff
+
+      - name: Run ruff check
+        run: ruff check uiautomator3 tests
+
+      - name: Run ruff format check
+        run: ruff format --check uiautomator3 tests
+
+  typecheck:
+    name: Type check (mypy)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # mypy targeting python_version=3.8 needs a mypy release that still
+      # supports pre-3.10 targets (mypy 2.0+ dropped this), and numpy
+      # stubs that don't require newer-than-3.8 syntax to parse - pin both
+      # explicitly here rather than floating to "latest" (see the note in
+      # pyproject.toml's [tool.mypy] section).
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install package and pinned type-checking toolchain
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[ocr,vision,web,mcp]"
+          pip install "mypy==1.14.1" "numpy<2"
+
+      - name: Run mypy
+        run: mypy uiautomator3
+
+  doctor:
+    name: u3 doctor (no device)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install package
+        run: pip install -e .
+
+      - name: Run doctor (expected to report no devices, exit 1)
+        run: |
+          u3 doctor || true
+          u3 version
+          u3 devices || true
+
+  inspector-web:
+    name: Inspector web (build + typecheck)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: inspector-web
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: inspector-web/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npx tsc --noEmit
+
+      - name: Build
+        run: npm run build

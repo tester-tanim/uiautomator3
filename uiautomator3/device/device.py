@@ -25,6 +25,7 @@ Phase 11 adds: short-TTL caching of hierarchy dumps and screenshots
 (project spec section 49-50), configurable via d.settings and
 automatically invalidated after any gesture/selector action.
 """
+
 from typing import Any, Dict, Optional, Union
 
 from PIL import Image

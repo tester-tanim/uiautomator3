@@ -4,7 +4,7 @@ from PIL import Image, ImageDraw
 pytest.importorskip("cv2")
 pytest.importorskip("numpy")
 
-from uiautomator3.vision.template_provider import TemplateMatchProvider  # noqa: E402
+from uiautomator3.vision.template_provider import TemplateMatchProvider
 
 
 def _draw_marker(img, origin):

@@ -1,4 +1,5 @@
 """Fluent vision locator: `d.visual(template).click()` per project spec section 12."""
+
 import time
 from typing import TYPE_CHECKING, Optional, Union
 

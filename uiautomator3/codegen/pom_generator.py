@@ -6,6 +6,7 @@ literal grouping (not scene-detection/clustering) - good enough for a
 recorded linear flow; smarter state-based grouping is a later phase (see
 project spec section 17, State-Based UI Model).
 """
+
 import re
 from typing import Dict, List, Optional, Tuple
 
