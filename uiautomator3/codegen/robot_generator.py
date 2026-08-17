@@ -8,12 +8,21 @@ ship one. The output documents intent in Robot's tabular syntax; wiring a
 real Robot Framework library is future work if that integration is
 prioritized.
 """
+
 from uiautomator3.recording.action import RecordedAction
 from uiautomator3.recording.session import RecordingSession
 
 
 def _robot_locator_arg(entry: RecordedAction) -> str:
-    parts = "    ".join(f"{k}={v}" for k, v in (entry.selector_criteria or {}).items())
+    # `selector_criteria` originates from a recording JSON file that may be
+    # hand-crafted rather than genuinely recorded; a key/value containing a
+    # newline could inject an extra Robot Framework line/keyword into the
+    # generated test case. Strip newlines defensively (Robot's tabular
+    # format has no quoting mechanism for them within a single cell).
+    parts = "    ".join(
+        f"{str(k).replace(chr(10), ' ')}={str(v).replace(chr(10), ' ')}"
+        for k, v in (entry.selector_criteria or {}).items()
+    )
     return parts
 
 

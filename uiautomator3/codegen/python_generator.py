@@ -12,6 +12,8 @@ this is what makes the generated code resilient to screen coordinates
 changing between runs; falls back to raw coordinates/keys only for
 actions that have no associated element (plain swipes, key presses).
 """
+
+import keyword
 from typing import List, Optional
 
 from uiautomator3.recording.action import RecordedAction
@@ -19,8 +21,22 @@ from uiautomator3.recording.session import RecordingSession
 
 
 def _format_kwargs(criteria: dict) -> str:
+    """Render `criteria` as Python keyword-argument source.
+
+    `criteria` ultimately originates from a recording JSON file
+    (RecordingSession.from_list -> RecordedAction.from_dict), which may be
+    hand-crafted or tampered with rather than genuinely recorded. A dict
+    *key* containing Python syntax (quotes, parens, semicolons) would break
+    out of the keyword-argument position and inject arbitrary statements
+    into generated source that a user later executes - so keys are
+    restricted to valid Python identifiers, exactly like real keyword
+    arguments already must be. Values are still just data (quoted string
+    literals or repr()) and cannot inject syntax.
+    """
     parts = []
     for key, value in criteria.items():
+        if not isinstance(key, str) or not key.isidentifier() or keyword.iskeyword(key):
+            raise ValueError(f"invalid selector criteria key for code generation: {key!r}")
         if isinstance(value, str):
             escaped = value.replace("\\", "\\\\").replace('"', '\\"')
             parts.append(f'{key}="{escaped}"')

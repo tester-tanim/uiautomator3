@@ -1,6 +1,8 @@
 import ast
 
-from uiautomator3.codegen.python_generator import generate_python
+import pytest
+
+from uiautomator3.codegen.python_generator import _format_kwargs, generate_python
 from uiautomator3.recording.session import RecordingSession
 
 
@@ -44,7 +46,7 @@ def test_generate_python_with_serial():
 def test_locator_click_uses_selector_syntax():
     session = build_session()
     code = generate_python(session)
-    assert "d(text=\"Login\").click()" in code
+    assert 'd(text="Login").click()' in code
 
 
 def test_coordinate_only_click_uses_raw_coordinates():
@@ -83,3 +85,64 @@ def test_empty_session_still_valid():
     code = generate_python(session)
     ast.parse(code)
     assert "u3.connect()" in code
+
+
+# -- security: selector_criteria keys must not be interpretable as Python
+# syntax; they originate from a recording JSON file that may be
+# hand-crafted or tampered with, not just genuinely recorded (see security
+# review) --
+
+
+def test_format_kwargs_rejects_syntax_breaking_key():
+    malicious_key = 'text="x"); import os; os.system("echo PWNED") #'
+    with pytest.raises(ValueError):
+        _format_kwargs({malicious_key: "y"})
+
+
+def test_format_kwargs_rejects_non_identifier_keys():
+    for bad_key in ["has space", "has-dash", "1leading_digit", "", "trailing.dot"]:
+        with pytest.raises(ValueError):
+            _format_kwargs({bad_key: "value"})
+
+
+def test_format_kwargs_rejects_python_keyword_as_key():
+    with pytest.raises(ValueError):
+        _format_kwargs({"class": "value"})  # 'class' is a reserved keyword
+
+
+def test_format_kwargs_accepts_normal_identifier_keys():
+    result = _format_kwargs({"text": "Login", "resourceId": "com.example:id/login"})
+    assert result == 'text="Login", resourceId="com.example:id/login"'
+
+
+def test_generate_python_raises_on_malicious_selector_criteria_key():
+    session = RecordingSession()
+    malicious_key = 'text="x"); import os; os.system("echo PWNED") #'
+    session.log("click", coordinates={"x": 1, "y": 1}, selector_criteria={malicious_key: "y"})
+
+    with pytest.raises(ValueError):
+        generate_python(session)
+
+
+def test_generate_pytest_raises_on_malicious_selector_criteria_key():
+    from uiautomator3.codegen.pytest_generator import generate_pytest
+
+    session = RecordingSession()
+    malicious_key = 'text="x"); import os; os.system("echo PWNED") #'
+    session.log("click", coordinates={"x": 1, "y": 1}, selector_criteria={malicious_key: "y"})
+
+    with pytest.raises(ValueError):
+        generate_pytest(session)
+
+
+def test_generate_pom_raises_on_malicious_selector_criteria_key():
+    from uiautomator3.codegen.pom_generator import generate_pom
+
+    session = RecordingSession()
+    malicious_key = 'text="x"); import os; os.system("echo PWNED") #'
+    session.log(
+        "click", coordinates={"x": 1, "y": 1}, selector_criteria={malicious_key: "y"}, screen="com.example/.Main"
+    )
+
+    with pytest.raises(ValueError):
+        generate_pom(session)

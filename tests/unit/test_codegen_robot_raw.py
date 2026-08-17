@@ -78,3 +78,39 @@ def test_generate_raw_includes_extra_fields():
 
 def test_generate_raw_empty_session():
     assert generate_raw(RecordingSession()) == ""
+
+
+# -- security: a newline embedded in a key/value must not inject an extra
+# line into either line-oriented format (see security review) --
+
+
+def test_generate_raw_strips_embedded_newlines_from_values():
+    session = RecordingSession()
+    session.log("click", coordinates={"x": 1, "y": 1}, selector_criteria={"text": "a\nFAKE_LINE b"})
+
+    output = generate_raw(session)
+
+    # a single action must still produce a single line (plus the trailing
+    # newline generate_raw always appends) - not an extra injected line
+    assert output.count("\n") == 1
+    assert "FAKE_LINE" in output  # content preserved, just not as a new line
+
+
+def test_generate_raw_strips_embedded_newlines_from_keys():
+    session = RecordingSession()
+    session.log("click", coordinates={"x": 1, "y": 1}, selector_criteria={"text\nFAKE_LINE": "value"})
+
+    output = generate_raw(session)
+
+    assert output.count("\n") == 1
+
+
+def test_generate_robot_strips_embedded_newlines():
+    session = RecordingSession()
+    session.log("click", coordinates={"x": 1, "y": 1}, selector_criteria={"text": "a\nFAKE KEYWORD"})
+
+    code = generate_robot(session)
+
+    # the injected content must not appear on its own Robot Framework line
+    for line in code.splitlines():
+        assert line.strip() != "FAKE KEYWORD"
