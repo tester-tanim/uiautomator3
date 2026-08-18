@@ -127,7 +127,7 @@ body {
 .app-body {
   flex: 1;
   display: grid;
-  grid-template-columns: 280px 1fr 340px;
+  grid-template-columns: 420px 1fr 340px;
   gap: 1px;
   background: var(--panel-border);
   overflow: hidden;
@@ -195,6 +195,43 @@ body {
   color: #fff;
 }
 
+.tree-toggle {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 10px;
+  border-radius: 3px;
+}
+.tree-toggle:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+.tree-toggle-spacer {
+  flex-shrink: 0;
+  width: 14px;
+}
+
+.tree-panel-actions {
+  display: flex;
+  gap: 8px;
+}
+.tree-action-btn {
+  background: transparent;
+  color: var(--text-dim);
+  border: none;
+  font-size: 11px;
+  cursor: pointer;
+  padding: 0;
+}
+.tree-action-btn:hover {
+  color: var(--text);
+  text-decoration: underline;
+}
+
 .tree-node-label {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -237,7 +274,7 @@ body {
 
 .preview-frame {
   position: relative;
-  max-height: calc(100vh - 100px);
+  height: calc(100vh - 100px);
   max-width: 100%;
   margin: 12px auto;
   border: 1px solid var(--panel-border);
