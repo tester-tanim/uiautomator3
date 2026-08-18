@@ -18,9 +18,17 @@ function label(element: UIElement): string {
   return bits.join(" ");
 }
 
+function serializeNode(element: UIElement, byId: Map<string, UIElement>, depth: number): string {
+  const indent = "  ".repeat(depth);
+  const line = `${indent}[${element.role ?? "?"}] ${label(element)}`;
+  const children = element.children.map((id) => byId.get(id)).filter((e): e is UIElement => !!e);
+  return [line, ...children.map((c) => serializeNode(c, byId, depth + 1))].join("\n");
+}
+
 export function ElementTreePanel({ tree, selectedId, hoveredId, onSelect, onHover }: Props) {
   const [query, setQuery] = useState("");
   const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
+  const [copied, setCopied] = useState(false);
 
   const byId = useMemo(() => new Map((tree?.elements ?? []).map((e) => [e.id, e])), [tree]);
   const roots = useMemo(() => (tree?.elements ?? []).filter((e) => e.parent_id === null), [tree]);
@@ -52,6 +60,13 @@ export function ElementTreePanel({ tree, selectedId, hoveredId, onSelect, onHove
       else next.add(id);
       return next;
     });
+  }
+
+  function copyTree() {
+    const text = roots.map((r) => serializeNode(r, byId, 0)).join("\n");
+    navigator.clipboard?.writeText(text).catch(() => undefined);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1200);
   }
 
   function renderNode(element: UIElement): React.ReactNode {
@@ -104,6 +119,9 @@ export function ElementTreePanel({ tree, selectedId, hoveredId, onSelect, onHove
           </button>
           <button className="tree-action-btn" onClick={() => setCollapsed(new Set(allIds))}>
             Collapse all
+          </button>
+          <button className="tree-action-btn" onClick={copyTree} disabled={!tree}>
+            {copied ? "Copied!" : "Copy tree"}
           </button>
         </div>
       </div>
