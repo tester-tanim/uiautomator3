@@ -20,9 +20,11 @@ function label(element: UIElement): string {
 
 export function ElementTreePanel({ tree, selectedId, hoveredId, onSelect, onHover }: Props) {
   const [query, setQuery] = useState("");
+  const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
 
   const byId = useMemo(() => new Map((tree?.elements ?? []).map((e) => [e.id, e])), [tree]);
   const roots = useMemo(() => (tree?.elements ?? []).filter((e) => e.parent_id === null), [tree]);
+  const allIds = useMemo(() => (tree?.elements ?? []).map((e) => e.id), [tree]);
 
   const matchesQuery = (e: UIElement): boolean => {
     if (!query.trim()) return true;
@@ -43,11 +45,22 @@ export function ElementTreePanel({ tree, selectedId, hoveredId, onSelect, onHove
     });
   };
 
+  function toggleCollapsed(id: string) {
+    setCollapsed((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }
+
   function renderNode(element: UIElement): React.ReactNode {
     if (query.trim() && !anyDescendantMatches(element)) return null;
     const children = element.children.map((id) => byId.get(id)).filter((e): e is UIElement => !!e);
     const isSelected = element.id === selectedId;
     const isHovered = element.id === hoveredId;
+    const hasChildren = children.length > 0;
+    const isExpanded = !collapsed.has(element.id) || (query.trim() !== "" && hasChildren);
 
     return (
       <div key={element.id} style={{ marginLeft: 12 }}>
@@ -60,17 +73,40 @@ export function ElementTreePanel({ tree, selectedId, hoveredId, onSelect, onHove
           onMouseEnter={() => onHover(element.id)}
           onMouseLeave={() => onHover(null)}
         >
+          {hasChildren ? (
+            <span
+              className="tree-toggle"
+              onClick={(evt) => {
+                evt.stopPropagation();
+                toggleCollapsed(element.id);
+              }}
+            >
+              {isExpanded ? "▾" : "▸"}
+            </span>
+          ) : (
+            <span className="tree-toggle-spacer" />
+          )}
           <span className={`role-badge role-${element.role ?? "container"}`}>{element.role ?? "?"}</span>
           <span className="tree-node-label">{label(element)}</span>
         </div>
-        {children.map(renderNode)}
+        {hasChildren && isExpanded && children.map(renderNode)}
       </div>
     );
   }
 
   return (
     <div className="panel tree-panel">
-      <div className="panel-header">Device Tree</div>
+      <div className="panel-header">
+        Device Tree
+        <div className="tree-panel-actions">
+          <button className="tree-action-btn" onClick={() => setCollapsed(new Set())}>
+            Expand all
+          </button>
+          <button className="tree-action-btn" onClick={() => setCollapsed(new Set(allIds))}>
+            Collapse all
+          </button>
+        </div>
+      </div>
       <input
         className="search-input"
         placeholder="Search elements..."
