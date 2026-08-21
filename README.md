@@ -170,4 +170,4 @@ note, and how to submit changes.
 
 ## License
 
-[MIT](LICENSE) © 2026 Ishtiaque Ahmed Tanim
+[MIT](LICENSE)
