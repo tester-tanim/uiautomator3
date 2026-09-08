@@ -48,12 +48,13 @@ from uiautomator3.exceptions import (
     TransportTimeoutError,
     UIAutomator3Error,
     VisionProviderError,
+    XPathError,
 )
 from uiautomator3.healing import ElementSnapshot, HealingReport
 from uiautomator3.locator import LocatorCandidate, LocatorSet, StabilityReport
 from uiautomator3.ocr import OCRTextRegion
 from uiautomator3.recording import RecordedAction, RecordingSession
-from uiautomator3.selectors import Locator, Selector
+from uiautomator3.selectors import Locator, Selector, XPathLocator, find_all_xpath
 from uiautomator3.settings import Settings
 from uiautomator3.version import __version__
 from uiautomator3.vision import VisionMatch
@@ -98,8 +99,11 @@ __all__ = [
     "UIElement",
     "VisionMatch",
     "VisionProviderError",
+    "XPathError",
+    "XPathLocator",
     "__version__",
     "connect",
     "devices",
     "doctor",
+    "find_all_xpath",
 ]

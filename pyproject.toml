@@ -22,6 +22,7 @@ Pillow = ">=8.0.0"
 pytesseract = { version = "*", optional = true }
 opencv-python = { version = "*", optional = true }
 numpy = { version = "*", optional = true }
+lxml = { version = ">=4.9.0", optional = true }
 fastapi = { version = "*", optional = true }
 uvicorn = { version = "*", optional = true }
 websockets = { version = "*", optional = true }
@@ -36,6 +37,7 @@ ruff = "*"
 [tool.poetry.extras]
 ocr = ["pytesseract"]
 vision = ["opencv-python", "numpy"]
+xpath = ["lxml"]
 web = ["fastapi", "uvicorn", "websockets"]
 mcp = ["mcp"]
 

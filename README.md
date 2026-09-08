@@ -36,6 +36,10 @@ d(text="Login").click()
 d(resourceId="com.example:id/email").click()
 d.send_keys("test@example.com")
 
+# Full XPath 1.0 requires the optional lxml dependency.
+# pip install -e ".[xpath]"
+d.xpath("//TextView[contains(@text, 'Login')]").click()
+
 # scored, ranked locators for any element
 locator = d(text="Login")
 print(locator.best_locator(), locator.confidence)
@@ -51,6 +55,7 @@ print(d.ai.inspect())
 | 🎯 **Scored locators** | Every candidate selector gets a uniqueness/stability/specificity score — ambiguous matches raise `ElementAmbiguousError` instead of silently guessing |
 | 🩹 **Self-healing** | Opt-in: remembers a resolved element's attributes and re-locates it when the original locator stops matching |
 | 🔍 **OCR + vision fallback** | `d.ocr(text)` and `d.visual(template)` locate elements no accessibility tree can see — both optional, lazily imported |
+| 🧭 **XPath 1.0** | `d.xpath(expression)` evaluates full XPath 1.0 against the normalized hierarchy — install the optional `xpath` extra |
 | 🖥️ **Built-in web inspector** | React/TS + FastAPI/WebSocket UI with a live device preview, click-to-select overlay, and copyable generated locators |
 | 🎬 **Record → codegen** | Turn a recorded interaction session into Python, pytest, Page Object Model, JSON, YAML, or Robot Framework |
 | 🤖 **AI-ready** | `d.ai.inspect()/find()/click()/type()` plus an MCP server so agents can drive the device directly |
@@ -70,7 +75,7 @@ print(d.ai.inspect())
 
 ```bash
 pip install -e .                          # core only
-pip install -e ".[ocr,vision,web,mcp]"    # everything
+pip install -e ".[ocr,vision,web,mcp,xpath]" # optional features
 ```
 
 ```python
@@ -81,6 +86,9 @@ d = u3.connect()
 d(text="Login").click()
 d(resourceId="com.example:id/email").click()
 d.send_keys("test@example.com")
+
+login = d.xpath("//TextView[contains(@text, 'Login')]")
+login.click()
 
 locator = d(text="Login")
 print(locator.best_locator(), locator.confidence)
@@ -136,7 +144,6 @@ tree (with one-click tree copy), and generated/scored locators per element — s
 ### What uiautomator2 still does that uiautomator3 doesn't yet
 
 - Fast device-side JPEG screenshot encoding (uiautomator3 currently uses `adb screencap`, which is slower)
-- A full XPath 1.0 engine (uiautomator3 generates a best-effort structural XPath, not a real XPath evaluator)
 - Screen recording (video), a state-based UI model, and a plugin registry are all still unimplemented placeholders in uiautomator3
 
 See [docs/UIAUTOMATOR2_ANALYSIS.md](docs/UIAUTOMATOR2_ANALYSIS.md) and

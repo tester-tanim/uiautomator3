@@ -58,6 +58,10 @@ class SelectorError(UIAutomator3Error):
     """Raised for invalid or malformed selector input."""
 
 
+class XPathError(SelectorError):
+    """Raised for XPath evaluation or XPath dependency failures."""
+
+
 class LocatorHealingError(UIAutomator3Error):
     """Raised when self-healing fails to recover a broken locator."""
 

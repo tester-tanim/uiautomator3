@@ -21,6 +21,9 @@ Initial implementation, built phase by phase per `docs/UIAUTOMATOR3_ARCHITECTURE
   engine, the fluent `Locator` object (click/wait/assertions, auto-targeting the nearest
   clickable ancestor for real tap accuracy), rule-based locator candidate generation and
   scoring (uniqueness/stability/specificity), and `d.analyze_locator()` stability reports.
+- **XPath** (`selectors.xpath`): optional full XPath 1.0 evaluation through `lxml`, exposed
+  as `find_all_xpath(tree, expression)` and the lazy `d.xpath(expression)` locator, with
+  Android attribute names and class-name shorthand such as `//TextView`.
 - **Self-healing** (`healing`): opt-in (`d.settings["self_healing"] = True`) automatic
   locator recovery from a remembered element snapshot when a literal selector stops
   matching.
@@ -57,9 +60,7 @@ Initial implementation, built phase by phase per `docs/UIAUTOMATOR3_ARCHITECTURE
 
 - No device-side agent yet - hierarchy/gesture/screenshot operations go through
   `uiautomator dump` and plain `adb shell input`/`screencap` rather than a bundled
-  JSON-RPC service; this means no fast device-side JPEG screenshot encoding and no XPath
-  engine yet (locator generation includes a best-effort structural XPath, not a full
-  XPath 1.0 implementation).
+  JSON-RPC service; this means no fast device-side JPEG screenshot encoding.
 - `matching/`, `plugins/`, `server/`, and `waits/` are placeholder packages: their
   intended scope already exists elsewhere (matching in `locator/`, provider-pattern
   plugin points in `ocr/`/`vision/`, waits in `selectors/locator_object.py`) but no

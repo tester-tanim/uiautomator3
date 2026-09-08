@@ -45,6 +45,7 @@ from uiautomator3.recording.session import RecordingSession
 from uiautomator3.screenshots.screenshot import ScreenshotEngine
 from uiautomator3.selectors.locator_object import Locator
 from uiautomator3.selectors.query import Selector
+from uiautomator3.selectors.xpath import XPathLocator
 from uiautomator3.settings import Settings
 from uiautomator3.transport import ADBTransport, Transport
 from uiautomator3.vision.locator import VisualLocator
@@ -189,6 +190,10 @@ class Device:
         selector = Selector(**kwargs)
         tree = self.inspect()
         return analyze_locator(tree, selector)
+
+    def xpath(self, expression: str) -> XPathLocator:
+        """Return a lazy locator for an XPath 1.0 expression."""
+        return XPathLocator(self, expression)
 
     # -- OCR / vision (optional extras, imported lazily on first use) --
 
